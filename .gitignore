@@ -1,0 +1,10 @@
+# OS generated files
+Thumbnail cache
+Thumbs.db
+Desktop.ini
+
+# Temporary extraction folder
+temp_extraction/
+
+# Model specific files
+.gemini/

@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aubrey Holmes | Violin & Viola</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            /* Palette inspired by refined outdoors: Forest, Stone, Cream, Bronze */
+            --color-primary: #2C4C3B;
+            /* Deep Forest Green */
+            --color-primary-dark: #1F362A;
+            --color-secondary: #F9F9F5;
+            /* Cream/Paper */
+            --color-text-main: #2D2D2D;
+            --color-text-light: #5A5A5A;
+            --color-accent: #C5A065;
+            /* Muted Gold/Bronze */
+            --color-bg-light: #FFFFFF;
+            --color-overlay: rgba(20, 30, 25, 0.4);
+
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+
+            --transition-slow: 0.8s ease-out;
+            --transition-med: 0.4s ease;
+        }
+
+        /* RESET & BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-secondary);
+            color: var(--color-text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        big {
+            font-family: var(--font-display);
+            font-weight: 400;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition-med);
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* UTILITIES */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            padding: 6rem 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: var(--transition-slow);
+        }
+
+        .is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--color-primary);
+            color: white;
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            border: 1px solid var(--color-primary);
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: var(--color-primary);
+        }
+
+        /* NAVIGATION */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 0;
+            z-index: 1000;
+            transition: 0.4s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(5px);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+            font-weight: 700;
+            color: white;
+        }
+
+        nav.scrolled .logo {
+            color: var(--color-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.9);
+            position: relative;
+        }
+
+        nav.scrolled .nav-links a {
+            color: var(--color-text-main);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--color-accent);
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* MOBILE MENU */
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            color: white;
+        }
+
+        nav.scrolled .menu-toggle {
+            color: var(--color-primary);
+        }
+
+        /* HERO SECTION */
+        #home {
+            height: 100vh;
+            background: url('Home/MeHome.jpg') center/cover no-repeat;
+            /* Fallback to MeHome2 if needed */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        #home::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: #fff;
+            max-width: 800px;
+            padding: 0 1rem;
+        }
+
+        .hero-quote {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            line-height: 1.4;
+            font-style: italic;
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-cite {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        /* ABOUT SECTION */
+        #about {
+            background: var(--color-bg-light);
+        }
+
+        .about-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: flex-start;
+            /* Changed from center to accommodate text */
+        }
+
+        .about-img img {
+            width: 100%;
+            height: auto;
+            border-radius: 2px;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            color: var(--color-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1rem;
+            color: var(--color-text-light);
+            font-size: 1rem;
+        }
+
+        /* PERFORMANCE */
+        #performance {
+            position: relative;
+            background: url('Performance/PerformancePhoto.jpg') center/cover no-repeat fixed;
+            padding: 10rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #performance::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(44, 76, 59, 0.75);
+            /* Green overlay */
+        }
+
+        .perf-card {
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 3rem 4rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            color: white;
+            max-width: 600px;
+        }
+
+        .perf-card h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .perf-card p {
+            font-size: 1.2rem;
+        }
+
+        /* TEACHING */
+        #teaching {
+            background: var(--color-secondary);
+        }
+
+        .teaching-grid {
+            display: grid;
+            gap: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .teaching-block {
+            background: white;
+            padding: 2.5rem;
+            border-left: 3px solid var(--color-accent);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s;
+        }
+
+        .teaching-block:hover {
+            transform: translateY(-5px);
+        }
+
+        .teaching-block h3 {
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .teaching-block h4 {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .teaching-section-main {
+            margin-bottom: 4rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        .teaching-philosophy {
+            margin-top: 4rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            padding-top: 4rem;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            /* 16:9 */
+            height: 0;
+            margin-top: 2rem;
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* MEDIA */
+        #media {
+            background: var(--color-bg-light);
+        }
+
+        .media-intro {
+            max-width: 800px;
+            margin: 0 auto 3rem auto;
+            text-align: center;
+        }
+
+        .media-image-banner {
+            width: 33%;
+            height: auto;
+            margin: 0 auto 0 auto;
+            /* Reduced bottom margin to compensate for clip gap */
+            clip-path: inset(0 0 20% 0);
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 2rem;
+        }
+
+        .video-item {
+            margin-bottom: 2rem;
+        }
+
+        .video-item p {
+            margin-top: 0.5rem;
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+            text-align: center;
+        }
+
+        /* CONTACT */
+        #contact {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            /* Flush layout */
+        }
+
+        .contact-image {
+            background: url('Contact/contactphoto.jpg') top center/cover no-repeat;
+            min-height: 500px;
+        }
+
+        .contact-form-area {
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .contact-form-area h2 {
+            color: var(--color-accent);
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-list {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-list p {
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .contact-email {
+            display: inline-block;
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: white;
+            border-bottom: 1px solid var(--color-accent);
+            padding-bottom: 5px;
+        }
+
+        .contact-email:hover {
+            color: var(--color-accent);
+            border-color: transparent;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #1a1a1a;
+            color: #888;
+            padding: 3rem 0;
+            text-align: center;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+                font-size: 1.5rem;
+            }
+
+            .hero-quote {
+                font-size: 1.8rem;
+            }
+
+            .about-layout,
+            .contact-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .perf-card h2 {
+                font-size: 2rem;
+            }
+
+            .contact-image {
+                min-height: 300px;
+            }
+
+            .contact-form-area {
+                padding: 3rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <nav id="navbar">
+        <div class="container nav-content">
+            <a href="#home" class="logo">AUBREY HOLMES</a>
+            <div class="menu-toggle">☰</div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#performance">Performance</a>
+                <a href="#teaching">Teaching</a>
+                <a href="#media">Media</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section id="home">
+        <div class="hero-content fade-in-up">
+            <div class="hero-quote">
+                “...it [music] must always sound noble, that is the absolute characteristic of music...music is an art
+                of emotion, of nobility, of dignity, of greatness, of love, of tenderness.”
+            </div>
+            <div class="hero-cite">- Arthur Rubinstein</div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="about-layout">
+                <div class="about-text fade-in-up">
+                    <h4
+                        style="color:var(--color-accent); letter-spacing:2px; text-transform:uppercase; margin-bottom:1rem;">
+                        Biography</h4>
+                    <h2>Aubrey Holmes</h2>
+                    <p><em>“...a warm sound, and much joy...vivacious!”</em> - The Strad [Carnegie Hall debut]</p>
+                    <br>
+                    <p>Aubrey Holmes is a concert violinist/violist and chamber musician currently living and teaching
+                        in Boise, Idaho.</p>
+                    <p>During the 2022/2023 season, Mr. Holmes was a full time, core member of the Virginia Symphony
+                        Orchestra’s violin section - rotated into assistant concertmaster. He is also a founding member
+                        and violinist of the Heimat Quartet (2014–2020), which gave their Carnegie Hall debut in 2019.
+                        In the fall of the same year, Heimat joined the faculty at Shenandoah Conservatory in
+                        Winchester, VA, giving their final recital as an ensemble in February 2020 before disbanding
+                        after six years together.</p>
+                    <p>From 2011–2015, Mr. Holmes was based in Boston, Massachusetts. Here he played in Symphony Nova
+                        (Concertmaster/Principal 2nd), MetroWest Opera (Principal 2nd), Symphony Pro Musica (Principal
+                        2nd), Boston Opera Collaborative (Associate Concertmaster), The Cape Ann Symphony (Associate
+                        Principal 2nd), Boston Modern Orchestra Project, The Vermont Symphony Orchestra, and The Cape
+                        Symphony Orchestra. Mr. Holmes is also the former first violinist of the Videri String Quartet
+                        which specializes in the performance and recording of video game music.</p>
+                    <p>Other notable appearances and engagements with Heimat include faculty positions at Interlochen
+                        Center for the Arts High School Division – Advanced String Quartet Seminar, as well as
+                        quarter-finalists at the 2017 Fischoff National Chamber Music Competition. The Quartet also
+                        competed internationally at the 2019 Joachim International Chamber Music Competition held in
+                        Weimar, Germany where they also finished as quarter-finalists. Other international appearances
+                        include the International Mendelssohn Festival in Hamburg, Germany, The Esmeraldas International
+                        Music Festival held in Quito, Ecuador, and the Lunenberg Academy of Music (LAMP) in Lunenberg,
+                        Nova Scotia.</p>
+                    <p>His primary mentors have included Dr. Blanka Bednarz, Dr. Irina Muresanu, Cathy Meng Robinson,
+                        and Daniel Kurganov, as well as members of the Miami String Quartet, Shanghai Quartet, and the
+                        Audubon Quartet.</p>
+                    <p style="margin-top:1rem; font-size:0.9rem;"><strong>Degrees Earned:</strong> BA violin
+                        performance, MM violin performance, MM chamber music (violin/Heimat Quartet), AD chamber music
+                        (violin/Heimat Quartet).</p>
+                </div>
+                <div class="about-img fade-in-up">
+                    <img src="About/meBoise.jpeg" alt="Aubrey Holmes in Boise">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PERFORMANCE -->
+    <section id="performance">
+        <div class="perf-card fade-in-up">
+            <h4
+                style="text-transform:uppercase; letter-spacing:2px; font-size:0.9rem; margin-bottom:1rem; opacity:0.8;">
+                Upcoming Events</h4>
+            <h2>Performance Schedule</h2>
+            <p>Please check back for upcoming performances in February 2026!</p>
+        </div>
+    </section>
+
+    <!-- TEACHING -->
+    <section id="teaching" class="section">
+        <div class="container">
+            <div class="teaching-section-main text-center fade-in-up">
+                <h4 style="color:var(--color-primary); letter-spacing:2px; text-transform:uppercase;">Education &
+                    Mentorship</h4>
+                <h2 style="font-size:3rem; margin:1rem 0;">Teaching Studio</h2>
+            </div>
+
+            <div class="teaching-grid fade-in-up" style="margin-bottom: 4rem;">
+                <div class="teaching-block">
+                    <h4>Location</h4>
+                    <p>Currently located and teaching primarily in Boise, Idaho. I also offer online lessons for those
+                        located outside of Boise and/or need the flexibility of online/in-person options.</p>
+                </div>
+                <div class="teaching-block">
+                    <h4>Experience</h4>
+                    <p>My teaching experience ranges from beginners of all ages (including adult amateurs) through to
+                        the collegiate level and with working professionals.</p>
+                </div>
+                <div class="teaching-block">
+                    <h4>Rates</h4>
+                    <p>$45.00 (30 minute lessons)</p>
+                    <p>$80.00 (1 hour lessons)</p>
+                </div>
+            </div>
+
+            <div class="teaching-philosophy fade-in-up">
+                <div class="container" style="max-width:900px;">
+                    <h3 class="text-center" style="margin-bottom:2rem; font-size:2rem; color:var(--color-primary);">
+                        Fundamentals. Routine. Sound.</h3>
+                    <p style="margin-bottom:1rem;">The central tenet of my teaching philosophy and pedagogy is in
+                        helping my students to achieve a fundamental command of the instrument as well as producing a
+                        beautiful sound.</p>
+                    <p style="margin-bottom:1rem;">My approach begins with applying two general principles: Firstly,
+                        understanding the need for this fundamental command, and utilizing select exercises, etudes,
+                        scales, and appropriate repertoire to help achieve this. Second, introducing problem solving
+                        methods and solution seeking ways of thinking because ultimately, I believe our job as educators
+                        and mentors is in teaching someone how to teach themselves (this applies to amateur musicians of
+                        all ages as well).</p>
+                    <p>Lastly, I believe in instilling a good and healthy work ethic through routine: Helping to create
+                        structure and routine not just in lessons but with practice at home is vital to the progress and
+                        overall success of a student. The routine and process of practicing is key to not only
+                        progressing, but in building and maintaining a structure that will serve the student/artist well
+                        throughout their career.</p>
+                </div>
+            </div>
+
+            <div class="teaching-philosophy fade-in-up" style="margin-top:4rem;">
+                <div class="container" style="max-width:900px;">
+                    <h3 class="text-center" style="margin-bottom:1rem; font-size:2rem;">The Art of Violin</h3>
+                    <p>The Art of Violin was released in 2000/2001 on PBS. This documentary explores the evolution and
+                        artistry of violin playing in the 20th century—arguably the greatest period in violin playing
+                        history. It was a transformative experience for me at the age of 12, and I’ve decided to include
+                        a link to the documentary here. If anything, it’s a wonderful “crash-course” in understanding
+                        the performative and pedagogical legacy and history of the violin, as well as insight into my
+                        methods, style, and beliefs in art and music.</p>
+                    <div class="video-container">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/UZTtTCR-Smk"
+                            title="The Art of Violin" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MEDIA -->
+    <section id="media" class="section">
+        <div class="container">
+            <h2 class="text-center fade-in-up" style="margin-bottom:1rem; color:var(--color-primary);">Media</h2>
+            <div class="media-intro fade-in-up">
+                <p>Although we’re living in an ever-changing and more digitally-reliant world, it’s my belief that music
+                    and art are best experienced in a “live” setting. This is a vital part of our connection as
+                    performers and community members - offering the greatest collective impact on our experience of
+                    these incredible art forms. Because of this, below I’ve included just a few examples of my playing
+                    with video omitted. For live events, please visit my “Performance” page.</p>
+            </div>
+
+            <img src="Media/MeMedia.jpg" alt="Aubrey Holmes Media" class="media-image-banner fade-in-up">
+
+            <div class="video-grid fade-in-up">
+                <div class="video-item">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/hfFbebzZlC8" title="Sibelius" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                    </div>
+                    <p>Jean Sibelius - 4 pieces for Violin (arr. viola) and Piano, Op. 78 - II. Romance</p>
+                </div>
+                <div class="video-item">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/skjt9IgyvJc" title="Schumann" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                    </div>
+                    <p>Robert Schumann - Abendlied “Evening Song” Op. 85, No 12</p>
+                </div>
+                <div class="video-item">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/eqe34H-jH7s" title="Von Paradis" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                    </div>
+                    <p>Maria Theresia Von Paradis - Sicilienne in E Flat Major</p>
+                </div>
+                <div class="video-item">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/dsBaMmrYTXc" title="Brahms" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+                    </div>
+                    <p>Heimat Quartet - Brahms Op. 51. No. 1 C minor - II. Andante moderato</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+        <div class="contact-layout">
+            <div class="contact-image"></div>
+            <div class="contact-form-area fade-in-up">
+                <h2>Contact Me</h2>
+                <div class="contact-list">
+                    <p>Please provide an answer for the following questions in your email:</p>
+                    <ol style="margin-left:1.5rem; margin-bottom:2rem; font-family:var(--font-body); opacity:0.9;">
+                        <li>Are you interested in violin/viola lessons?</li>
+                        <li>In-person (Boise, Idaho studio location) or online lessons?</li>
+                        <li>Who (child, yourself)?</li>
+                        <li>Current level of study/experience in music?</li>
+                    </ol>
+                    <a href="mailto:Holmesau.music@gmail.com" class="contact-email">Holmesau.music@gmail.com</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="footer">
+        <div class="container">
+            <p>&copy; 2026 Aubrey Holmes. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar Scroll Effect
+        const nav = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll Animation Observer
+        const observerOptions = {
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.width = '100%';
+                navLinks.style.background = 'white';
+                navLinks.style.padding = '2rem';
+                navLinks.style.boxShadow = '0 5px 20px rgba(0,0,0,0.1)';
+
+                // Set link colors to dark for mobile menu
+                document.querySelectorAll('.nav-links a').forEach(a => {
+                    a.style.color = 'var(--color-text-main)';
+                    a.style.marginBottom = '1rem';
+                });
+            }
+        });
+
+        // Close mobile menu on clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 900) {
+                    navLinks.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
