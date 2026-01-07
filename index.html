@@ -200,16 +200,21 @@
         }
 
         /* HERO SECTION */
+        /* HERO SECTION */
         #home {
-            height: 100vh;
-            background: #000 url('Home/MeMic.JPG') top center/cover no-repeat;
-            /* Fallback to MeHome2 if needed */
-            display: flex;
-            align-items: flex-start;
-            /* Align content to the top */
-            justify-content: flex-start;
-            /* Align content to the left */
             position: relative;
+            width: 100%;
+            height: auto;
+            min-height: 60vh;
+            background: #000;
+            display: block;
+        }
+
+        .hero-bg {
+            display: block;
+            width: 100%;
+            height: auto;
+            /* Ensure it covers viewport if possible, but prioritize full width */
         }
 
         #home::before {
@@ -220,17 +225,20 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5));
+            z-index: 1;
         }
 
         .hero-content {
-            position: relative;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             z-index: 2;
             text-align: left;
             color: #fff;
-            max-width: 30%;
-            /* One third width */
+            max-width: 100%;
             padding: 10rem 4rem;
-            /* Top and left padding to position in the "black part" */
         }
 
         .hero-quote {
