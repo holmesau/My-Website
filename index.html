@@ -486,6 +486,85 @@
             border-color: transparent;
         }
 
+        /* CONTACT FORM STYLES */
+        .contact-form {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-accent);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: var(--transition-med);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-accent);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .form-group select option {
+            background: var(--color-primary-dark);
+            color: white;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .submit-btn {
+            background: var(--color-accent);
+            color: var(--color-primary-dark);
+            border: none;
+            padding: 1rem 2rem;
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition-med);
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background: white;
+            color: var(--color-primary);
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* FOOTER */
         footer {
             background: #1a1a1a;
@@ -770,16 +849,61 @@
             <div class="contact-image"></div>
             <div class="contact-form-area fade-in-up">
                 <h2>Contact Me</h2>
-                <div class="contact-list">
-                    <p>Please provide an answer for the following questions in your email:</p>
-                    <ol style="margin-left:1.5rem; margin-bottom:2rem; font-family:var(--font-body); opacity:0.9;">
-                        <li>Are you interested in violin/viola lessons?</li>
-                        <li>In-person (Boise, Idaho studio location) or online lessons?</li>
-                        <li>Who (child, yourself)?</li>
-                        <li>Current level of study/experience in music?</li>
-                    </ol>
-                    <a href="mailto:Holmesau.music@gmail.com" class="contact-email">Holmesau.music@gmail.com</a>
-                </div>
+                <form action="https://api.web3forms.com/submit" method="POST" class="contact-form">
+                    <input type="hidden" name="access_key" value="c76ff1cd-8f0f-43d2-b684-c326254a550a">
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" name="name" id="name" required placeholder="Full Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" name="email" id="email" required placeholder="email@example.com">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="instrument">Instruments Interested In?</label>
+                            <select name="instrument" id="instrument" required>
+                                <option value="" disabled selected>Select an option</option>
+                                <option value="Violin">Violin</option>
+                                <option value="Viola">Viola</option>
+                                <option value="Both">Both Violin & Viola</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">In-Person or Online?</label>
+                            <select name="location" id="location" required>
+                                <option value="" disabled selected>Select an option</option>
+                                <option value="In-person (Boise)">In-person (Boise, Idaho)</option>
+                                <option value="Online">Online Lessons</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="student">Who is the student?</label>
+                        <select name="student" id="student" required>
+                            <option value="" disabled selected>Select an option</option>
+                            <option value="Self">Myself</option>
+                            <option value="Child">My Child</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="experience">Current Experience / Level</label>
+                        <textarea name="experience" id="experience" rows="4" required
+                            placeholder="Tell me about your previous experience or current level..."></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submit-btn">Send Message</button>
+                    <!-- Success URL can be added here if needed -->
+                    <input type="hidden" name="subject" value="New Lesson Inquiry from your Website">
+                    <input type="hidden" name="from_name" value="Aubrey Holmes Website">
+                </form>
             </div>
         </div>
     </section>
